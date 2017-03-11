@@ -1,13 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var inferno_1 = require("inferno");
-var h = require("inferno-create-element");
-exports.default = h;
+var vue = require("vue");
 function renderer(dom) {
-    var _dom = dom;
+    var vm;
+    var props;
     return function (node, state, prev, actions) {
+        if (!vm) {
+            vm = new vue({
+                data: {
+                    state: state,
+                    prev: prev,
+                    actions: actions,
+                },
+                render: function (createElement) {
+                    console.log('Creating element');
+                    return createElement(node);
+                },
+            }).$mount(dom);
+        }
         if (node) {
-            inferno_1.default.render(node(state, prev, actions), _dom);
+            vm.$set(vm.$data, 'state', state);
+            vm.$set(vm.$data, 'prev', prev);
+            vm.$set(vm.$data, 'actions', actions);
         }
     };
 }

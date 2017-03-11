@@ -1,13 +1,25 @@
-import inferno from 'inferno'
-import * as h from 'inferno-create-element'
-
-export default h
+import * as vue from 'vue'
 
 export function renderer (dom) {
-  let _dom = dom
+  let vm
+  let props
   return function (node, state, prev, actions) {
+    if (!vm) {
+      vm = new vue({
+        data: {
+          state,
+          prev,
+          actions,
+        },
+        render (createElement) {
+          return createElement(node)
+        },
+      }).$mount(dom)
+    }
     if (node) {
-      inferno.render(node(state, prev, actions), _dom)
+      vm.$set(vm.$data, 'state', state)
+      vm.$set(vm.$data, 'prev', prev)
+      vm.$set(vm.$data, 'actions', actions)
     }
   }
 }
