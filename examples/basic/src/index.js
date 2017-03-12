@@ -1,65 +1,8 @@
-require('es6-shim')
-import helix from 'helix-js'
-import h, {renderer} from '../../../src/index'
-
-function links ({
-  onRouteClick,
-}) {
-  return (
-    <div>
-      <a style='margin-right: 10px;' href='/'>view one</a>
-      <a style='margin-right: 10px;' href='/bar'>view two</a>
-      <a style='margin-right: 10px;' href='/bar/123'>view three (123)</a>
-      <a style='margin-right: 10px;' href='/bar/456'>view three (456)</a>
-      <a style='margin-right: 10px;' href='/bar/789'>view three (789)</a>
-      <a style='margin-right: 10px;' onclick={() => onRouteClick('/bar/abc')}>view three (abc)</a>
-      <a style='margin-right: 10px;' onclick={() => onRouteClick('/bar/def')}>view three (def)</a>
-    </div>
-  )
-}
-
-function viewOne (state, prev, actions) {
-  return (
-    <div>
-      {links({
-        onRouteClick: path => actions.location.set(path),
-      })}
-      <h1>view one</h1>
-      {state.title}
-      <div>
-        <input value={state.title} oninput={(e: any) => actions.set(e.target.value)} />
-      </div>
-    </div>
-  )
-}
-function viewTwo (state, prev, actions) {
-  return (
-    <div>
-      {links({
-        onRouteClick: path => actions.location.set(path),
-      })}
-      <h1>view two</h1>
-      {state.title}
-      <div>
-        <input value={state.title} oninput={(e: any) => actions.set(e.target.value)} />
-      </div>
-    </div>
-  )
-}
-function viewThree (state, prev, actions) {
-  return (
-    <div>
-      {links({
-        onRouteClick: path => actions.location.set(path),
-      })}
-      <h1>view three {state.location.params.baz}</h1>
-      {state.title}
-      <div>
-        <input value={state.title} oninput={(e: any) => actions.set(e.target.value)} />
-      </div>
-    </div>
-  )
-}
+const helix = require('helix-js').default
+const renderer = require('../../../dist/index').renderer
+const viewOne = require('./view-one.vue')
+const viewTwo = require('./view-two.vue')
+const viewThree = require('./view-three.vue')
 
 let mount = document.createElement('div')
 document.body.appendChild(mount)
@@ -120,8 +63,10 @@ helix({
     },
   },
   routes: {
-    '': viewOne,
-    'bar': {
+    '/': {
+      view: viewOne,
+    },
+    '/bar': {
       onEnter (state, prev, actions) {
         actions.set('You have entered bar')
         console.log('bar onEnter', state.location.pathname)
@@ -136,7 +81,7 @@ helix({
       },
       view: viewTwo,
     },
-    'bar/:baz': {
+    '/bar/:baz': {
       onEnter (state, prev, actions) {
         actions.set(`You have entered bar:/baz ${state.location.params.baz}`)
         console.log('bar/:baz onEnter', state.location.pathname)
