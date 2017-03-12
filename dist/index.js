@@ -1,20 +1,18 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var vue = require("vue");
-function renderer(dom) {
-    var vm;
+import * as vue from 'vue';
+export function renderer(dom) {
+    let vm;
     return function (node, state, prev, actions) {
         if (node) {
             if (!vm) {
                 vm = new vue({
                     data: {
                         child: node,
-                        state: state,
-                        prev: prev,
-                        actions: actions,
+                        state,
+                        prev,
+                        actions,
                     },
-                    render: function (createElement) {
-                        var data = this.$data;
+                    render(createElement) {
+                        const data = this.$data;
                         return createElement(data.child);
                     },
                 }).$mount(dom);
@@ -28,4 +26,3 @@ function renderer(dom) {
         }
     };
 }
-exports.renderer = renderer;
