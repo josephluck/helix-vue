@@ -4,7 +4,7 @@
   "description": "Basic example of helix with vue as the rendering engine",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "budo ./src/index.js --live --pushstate --host=localhost --port=8888 --base=/ -- -t vueify",
+    "dev": "budo ./src/index.js --live --pushstate --host=localhost --port=8888 --base=/ -- -p tsify -t vueify",
     "dist": "npm run browserify && npm run minify",
     "browserify": "browserify ./src/index.js -t vueify -g uglifyify -o ./dist/bundle.js",
     "minify": "uglifyjs ./dist/bundle.js --compress --mangle -o ./dist/bundle.min.js"
@@ -18,6 +18,8 @@
     "babel-preset-stage-0": "^6.22.0",
     "browserify": "^14.1.0",
     "budo": "^9.4.7",
+    "tsify": "^3.0.1",
+    "typescript": "^2.2.1",
     "uglifyify": "^3.0.4",
     "uglifyjs": "^2.4.10",
     "vueify": "^9.4.1"

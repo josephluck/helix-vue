@@ -1,3 +1,4 @@
+import helix from 'helix-js';
 import * as vue from 'vue';
 export function renderer(dom) {
     let vm;
@@ -25,4 +26,10 @@ export function renderer(dom) {
             }
         }
     };
+}
+export default function (opts) {
+    const config = Object.assign({}, opts, {
+        render: renderer(opts.mount),
+    });
+    return helix(config);
 }

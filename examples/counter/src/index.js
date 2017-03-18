@@ -1,5 +1,4 @@
-const helix = require('helix-js').default
-const renderer = require('../../../dist/index').renderer
+const helix = require('../../../src/index').default
 const counter = require('./counter.vue')
 
 let mount = document.createElement('div')
@@ -48,5 +47,5 @@ helix({
     },
   },
   component: counter,
-  render: renderer(mount),
+  mount,
 })

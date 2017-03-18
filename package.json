@@ -7,11 +7,16 @@
     "src/",
     "dist/"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josephluck/helix-vue"
+  },
   "types": "./dist/index.d.ts",
   "scripts": {
     "dist": "tsc && npm run browserify && npm run minify",
     "browserify": "browserify -g babelify dist/index.js -o dist/bundle.js",
-    "minify": "uglifyjs dist/bundle.js -c -m -o dist/bundle.min.js"
+    "minify": "uglifyjs dist/bundle.js -c -m -o dist/bundle.min.js",
+    "deploy": "npm install && npm run dist && npm publish"
   },
   "author": "Joseph Luck",
   "license": "ISC",
@@ -21,7 +26,6 @@
     "babel-preset-stage-0": "^6.22.0",
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
-    "helix-js": "file:../helix",
     "tsify": "^3.0.1",
     "tslint": "^4.4.2",
     "tslint-config-standard": "^4.0.0",
@@ -29,6 +33,7 @@
     "uglify-js": "^2.7.5"
   },
   "dependencies": {
+    "helix-js": "^1.0.1",
     "vue": "^2.2.2"
   }
 }

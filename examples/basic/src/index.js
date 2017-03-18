@@ -1,5 +1,4 @@
-const helix = require('helix-js').default
-const renderer = require('../../../dist/index').renderer
+const helix = require('../../../src/index').default
 const viewOne = require('./view-one.vue')
 const viewTwo = require('./view-two.vue')
 const viewThree = require('./view-three.vue')
@@ -97,5 +96,5 @@ helix({
       view: viewThree,
     }
   },
-  render: renderer(mount),
+  mount,
 })
